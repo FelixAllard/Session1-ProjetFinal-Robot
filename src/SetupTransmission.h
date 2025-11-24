@@ -1,0 +1,10 @@
+//
+// Created by xilef on 11/24/2025.
+//
+
+#ifndef SESSION1_PROJETFINAL_ROBOT_SETUPTRANSMISSION_H
+#define SESSION1_PROJETFINAL_ROBOT_SETUPTRANSMISSION_H
+
+void InitializeSetupTransmission();
+void LoopSetupTransmission();
+#endif //SESSION1_PROJETFINAL_ROBOT_SETUPTRANSMISSION_H

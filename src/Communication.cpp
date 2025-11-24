@@ -14,32 +14,59 @@
 unsigned long lastPing = 0;
 
 void InitializeCommunication() {
-    Serial.begin(115200);      // Serial Monitor
     Serial1.begin(9600);       // HC-05 Bluetooth
     Serial.println("Initializing Communication");
     Serial.println("Finished Initialize Communication");
 }
 
 void LoopCommunication() {
-    PrintCommunication();
+    ReceiveFromBluetooth();
+    ReceiveFromSerialMonitor();
 
-    // Send heartbeat to HC-05 at controlled interval
+    SendHeartbeat();
+}
+
+// --- Function: Receive messages from HC-05 (Unity) ---
+String btBuffer = "";
+
+void ReceiveFromBluetooth() {
+    while (Serial1.available() > 0) {
+        char c = Serial1.read();
+        if (c == '\n') {
+            // full message received from Unity
+            Serial.println("From Unity: " + btBuffer);
+
+            // --- optional: parse commands from Unity ---
+            if (btBuffer == "stop_ping") {
+                // example: Unity can command Arduino
+            }
+
+            btBuffer = "";  // CLEAR BUFFER
+        } else {
+            btBuffer += c; // add char to buffer
+        }
+    }
+}
+
+
+// --- Function: Receive messages from Serial Monitor (for testing) ---
+void ReceiveFromSerialMonitor() {
+    while (Serial.available() > 0) {
+        char c = Serial.read();
+        Serial1.write(c); // send to Unity
+    }
+}
+
+// --- Function: Send heartbeat ping to HC-05 ---
+void SendHeartbeat() {
     if (millis() - lastPing >= PING_INTERVAL) {
         Serial1.println("ping");
         lastPing = millis();
     }
 }
 
-void PrintCommunication() {
-    // --- Read from HC-05 and print to Serial Monitor ---
-    while (Serial1.available() > 0) {
-        char c = Serial1.read();   // read one byte
-        Serial.write(c);           // echo to Serial Monitor
-    }
-
-    // --- Read from Serial Monitor and send to HC-05 ---
-    while (Serial.available() > 0) {
-        char c = Serial.read();    // read one byte
-        Serial1.write(c);          // send to HC-05
-    }
+// --- Optional: Send a custom message to Unity ---
+void SendToUnity(String message) {
+    Serial1.println(message);
+    Serial.println("Sent to Unity: " + message); // optional echo
 }
