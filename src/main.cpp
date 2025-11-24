@@ -1,8 +1,18 @@
 #include <Arduino.h>
+
+#include "Communication.h"
+#include <LibRobus.h>
+
 void setup() {
-// write your initialization code here
+
+    BoardInit();
+    delay(1000);
+    Serial.begin(115200);
+    InitializeCommunication();
 }
 
 void loop() {
+
+    LoopCommunication();
 // write your code here
 }
