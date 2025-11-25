@@ -11,5 +11,6 @@ void ReceiveFromBluetooth();
 void ReceiveFromSerialMonitor();
 
 void SendHeartbeat();
+
 void SendToUnity(String message);
 #endif //SESSION1_PROJETFINAL_ROBOT_COMMUNICATION_H

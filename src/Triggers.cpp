@@ -7,10 +7,23 @@
 #include <Arduino.h>
 #include <HardwareSerial.h>
 
+#include "Communication.h"
+
 //format de message: AV, AF
-void ReceivedMessage(char message)
+void ReceivedMessage(String message)
 {
-    switch (message)
+    char messageReceived;
+    if (message.length() > 1)
+    {
+        Serial.println("Wrong Message " + message);
+        return;
+    }
+
+    messageReceived = message.charAt(0);
+
+
+
+    switch (messageReceived)
     {
         //america del norte
         case 'A':
@@ -25,6 +38,8 @@ void ReceivedMessage(char message)
         moveDistanceBoth(45);
 
         TurnDegrees(60);
+
+        SendToUnity("Success");
         //Calibrer()
 
 
