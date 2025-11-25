@@ -88,8 +88,3 @@ void ReceivedMessage(char message)
         moveDistanceBoth(100);
     }
 }
-
-char SendMessage(char message)
-    {
-        return 'A';
-    }

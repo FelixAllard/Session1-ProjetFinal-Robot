@@ -1,7 +1,7 @@
 #include <LibRobus.h>
 #include <Arduino.h>
-#include "Communication.h"
-#include "SetupTransmission.h"
+
+#include "ESPCommunication.h"
 #include "Triggers.h"
 #include "LineFollow.h"
 
@@ -15,8 +15,7 @@ void setup() {
     BoardInit();
     delay(1000);
     Serial.begin(115200);
-    InitializeCommunication();
-    //InitializeSetupTransmission();
+    InitializeESPCommunication();
 }
 void Calibrer()
 {
@@ -72,9 +71,7 @@ void loop() {
 
 
 
-
-    //LoopCommunication();
-    //LoopSetupTransmission();
+    UpdateESPCommunication();
 
 
 }
