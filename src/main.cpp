@@ -2,9 +2,14 @@
 #include <Arduino.h>
 #include "Communication.h"
 #include "SetupTransmission.h"
+#include "Triggers.h"
+#include "LineFollow.h"
 
 
 bool sentTheMessage = false;
+char message = 'A';
+bool centre = true;
+
 void setup() {
 
     BoardInit();
@@ -13,9 +18,64 @@ void setup() {
     InitializeCommunication();
     //InitializeSetupTransmission();
 }
+void Calibrer()
+{
+    while (!isLineDetected())
+    {
+        moveDistanceBoth(3);
+        delay(10);
+    }
 
+    delay(10);
+
+
+
+    while (!isThreeOn())
+    {
+        updateFollower();
+        Serial.println(isThreeOn());
+    }
+
+    delay(10);
+    TurnDegrees(-90);
+    delay(10);
+
+    moveDistanceBoth(5);
+
+    while (!isOnlyCenter())
+    {
+        updateFollower();
+    }
+
+    TurnDegrees(180);
+
+
+    delay(10);
+
+    centre = false;
+}
 
 void loop() {
-    LoopCommunication();
+
+
+    TurnDegrees(85);
+    delay(10);
+    moveDistanceBoth(120);
+    delay(200);
+    TurnDegrees(175);
+    delay(10);
+    moveDistanceBoth(100);
+
+    Calibrer();
+
+
+
+
+
+
+    //LoopCommunication();
     //LoopSetupTransmission();
+
+
 }
+
