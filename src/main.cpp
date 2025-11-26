@@ -17,6 +17,7 @@ void setup() {
     Serial.begin(115200);
     InitializeESPCommunication();
 }
+/*
 void Calibrer()
 {
     while (!isLineDetected())
@@ -53,26 +54,15 @@ void Calibrer()
 
     centre = false;
 }
-
+*/
+float time = 0;
 void loop() {
 
-
-    TurnDegrees(85);
-    delay(10);
-    moveDistanceBoth(120);
-    delay(200);
-    TurnDegrees(175);
-    delay(10);
-    moveDistanceBoth(100);
-
-    Calibrer();
-
-
-
-
+    if (millis() - time > 5000) {
+        SendMessageToESP("HelloWorld");
+        time = millis();
+    }
 
     UpdateESPCommunication();
-
-
 }
 

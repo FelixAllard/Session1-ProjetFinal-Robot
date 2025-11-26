@@ -44,7 +44,7 @@ void handleMessage(String message) {
 
 void InitializeESPCommunication() {
 
-    Serial3.begin(115200);  // Serial1 to ESP
+    Serial3.begin(115200);
 
     // Set your callback function
     setMessageReceivedCallback(handleMessage);
@@ -64,7 +64,8 @@ void readIncomingMessages() {
             incomingBuffer.trim();
             if (onMessageReceived != nullptr) onMessageReceived(incomingBuffer);
             incomingBuffer = "";
-        } else {
+        }
+        else {
             incomingBuffer += c;
         }
     }
